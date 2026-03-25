@@ -38,19 +38,6 @@ services:
 
   postgres:
     image: postgres:16
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: sqlserver-704apps
-    environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=YourStrong!Passw0rd
-    ports:
-      - "1433:1433"
-    volumes:
-      - ./data/sqlserver:/var/opt/mssql
-    restart: unless-stopped
-    networks:
-      - minionet
     container_name: postgres
     ports:
       - 5432:5432
@@ -60,6 +47,20 @@ services:
       - POSTGRES_DB=eventstec
       - POSTGRES_USER=rodobank
       - POSTGRES_PASSWORD=123456
+    networks:
+      - minionet
+    
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong!Passw0rd
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./data/sqlserver:/var/opt/mssql
+    restart: unless-stopped
     networks:
       - minionet
 
